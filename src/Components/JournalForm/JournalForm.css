@@ -3,3 +3,7 @@
     flex-direction: column;
     gap: 30px;
 }
+.warning{
+    background: #340202;
+    border: 2px solid darkred;
+}
