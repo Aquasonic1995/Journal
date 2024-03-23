@@ -7,7 +7,7 @@ import JournalAdd from "./Components/JournalAdd/JournalAdd.jsx";
 import JournalList from "./Components/JournalList/JournalList.jsx";
 import Main from "./Main/Main.jsx";
 import JournalForm from "./Components/JournalForm/JournalForm.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {v1} from "uuid";
 
 function App() {
@@ -18,13 +18,32 @@ function App() {
 //     text: "Горные походы открывают удивительные природные ландшафты"
 // },
 //     {
-//         id:v1(),
-//         title: "2",
-//         date: new Date(),
-//         text: "Горные походы открывают удивительные природные ландшафты"
-//     },
+//         "id":1,
+//         "title":"Заголовок",
+//         "date":"2024/03/03",
+//         "text":"Горные походы открывают удивительные природные ландшафты"
+//     }
 // ];
+//     [{
+//         "id":1,
+//         "title":"Заголовок",
+//         "date":"2024/03/03",
+//         "text":"Горные походы открывают удивительные природные ландшафты"
+//     }]
     const [data, setData] = useState([]);
+    const json = JSON.parse(localStorage.getItem("data"));
+    useEffect(() => {
+            if(json){
+                setData(json.map(item=>({
+                    ...item, date:new Date(item.date)
+                })));
+            }
+    }, []);
+    useEffect(() => {
+if(data.length){
+    localStorage.setItem("data", JSON.stringify(data));
+}
+    }, [data]);
 
     const addPost = (post) => {
         setData(data => [...data,
