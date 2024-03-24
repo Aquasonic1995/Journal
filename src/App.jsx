@@ -2,13 +2,14 @@ import './App.css';
 import JournalItem from "./Components/JournalItem/JournalItem.jsx";
 import Card from "./Components/Card/Card.jsx";
 import LeftPanel from "./layouts/LeftPanel/LeftPanel.jsx";
-import Header from "./Header/Header.jsx";
+import Header from "./Components/Header/Header.jsx";
 import JournalAdd from "./Components/JournalAdd/JournalAdd.jsx";
 import JournalList from "./Components/JournalList/JournalList.jsx";
-import Main from "./Main/Main.jsx";
+import Main from "./Components/Main/Main.jsx";
 import JournalForm from "./Components/JournalForm/JournalForm.jsx";
 import {useEffect, useState} from "react";
 import {v1} from "uuid";
+
 
 function App() {
 //     const initialState = [{
@@ -33,53 +34,53 @@ function App() {
     const [data, setData] = useState([]);
     const json = JSON.parse(localStorage.getItem("data"));
     useEffect(() => {
-            if(json){
-                setData(json.map(item=>({
-                    ...item, date:new Date(item.date)
-                })));
-            }
+        if (json) {
+            setData(json.map(item => ({
+                ...item
+            })));
+        }
     }, []);
     useEffect(() => {
-if(data.length){
-    localStorage.setItem("data", JSON.stringify(data));
-}
+        if (data.length) {
+            localStorage.setItem("data", JSON.stringify(data));
+        }
     }, [data]);
 
     const addPost = (post) => {
+        console.log(post.date);
         setData(data => [...data,
             {
-                title:post.title,
-                date: new Date(post.date),
+                title: post.title,
+                date: post.date,
                 text: post.text,
-                id:v1(),
-        } ]);
+                id: v1(),
+            }]);
     };
-    const sortData = (a,b) =>{
-        if (a.date > b.date){
+    const sortData = (a, b) => {
+        if (a.date > b.date) {
             return -1;
-        }
-        else {
+        } else {
             return 1;
         }
     };
     return (
+
         <div className="app">
             <LeftPanel>
                 <Header/>
                 <JournalAdd/>
                 <JournalList>
                     {data.length === 0 && <p>Записей нет</p>}
-                    {data.length >0 &&
-                         data.sort(sortData).map(el => (
-                        <Card key={el.id}
-                        >
-                        <JournalItem
-                            title={el.title}
-                            date={el.date}
-                            text={el.text}
-                        />
-                    </Card>)
-
+                    {data.length > 0 &&
+                        data.sort(sortData).map(el => (
+                            <Card key={el.id}
+                            >
+                                <JournalItem
+                                    title={el.title}
+                                    date={el.date}
+                                    text={el.text}
+                                />
+                            </Card>)
                         )}
 
                 </JournalList>
@@ -88,7 +89,6 @@ if(data.length){
                 <JournalForm addPost={addPost}/>
             </Main>
         </div>
-
     );
 }
 
