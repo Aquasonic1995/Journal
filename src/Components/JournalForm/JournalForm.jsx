@@ -4,8 +4,10 @@ import {useEffect, useReducer, useRef} from "react";
 import cn from "clsx";
 import {formReducer, initialState} from "./JournalFormState.js";
 
+
 const JournalForm = ({addPost}) => {
     const [formState, dispatchForm] = useReducer(formReducer, initialState, undefined);
+
     // Check if formState is not undefined before destructuring
     const {isValid, isFormReadyToSubmit, values} = formState || {};
     const formRef = useRef(null);
@@ -37,6 +39,11 @@ const JournalForm = ({addPost}) => {
             clearTimeout(timerId);
         };
     }, [formState, isValid]);
+    useEffect(() => {
+        return () => {
+
+        };
+    }, );
 
     useEffect(() => {
         if (isFormReadyToSubmit) {
@@ -51,7 +58,6 @@ const JournalForm = ({addPost}) => {
         const formData = new FormData(e.target);
 
         const formProps = Object.fromEntries(formData);
-
         dispatchForm({type: "SUBMIT", payload: formProps});
     };
 

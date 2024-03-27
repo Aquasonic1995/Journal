@@ -1,18 +1,23 @@
-import {UserContext} from "../../UserContext/userContext.js";
+import {UserContext} from "../../UserContext/userContext.jsx";
 import {useContext} from "react";
-
+import {v1} from "uuid";
 
 const Select = () => {
-    const {names} = useContext(UserContext);
-    console.log(names);
+
+    const { userId, setUserId } = useContext(UserContext);
+   const  names= ["Вася", "Лёша","Настя"];
+    const changeUser =(e) => {
+        setUserId(e.target.selectedIndex);
+    };
 
     return (
-        <select>
+        <select name="user" id="user" value={names[userId]} onChange={changeUser}>
             {names.map(name=>(
-                <option key={name}>{name}</option>
+                <option value={name} key={v1()}>{name}</option>
             ))}
         </select>
     );
+
 };
 
 export default Select;
