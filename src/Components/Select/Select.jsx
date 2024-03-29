@@ -4,15 +4,14 @@ import {v1} from "uuid";
 
 const Select = () => {
 
-    const { userId, setUserId } = useContext(UserContext);
-   const  names= ["Вася", "Лёша","Настя"];
-    const changeUser =(e) => {
-        setUserId(e.target.selectedIndex);
+    const {contextData, setContextData} = useContext(UserContext);
+    const names = ["Вася", "Лёша", "Настя"];
+    const changeUser = (e) => {
+        setContextData({userId: e.target.selectedIndex, editMode: false});
     };
-
     return (
-        <select name="user" id="user" value={names[userId]} onChange={changeUser}>
-            {names.map(name=>(
+        <select name="user" id="user" value={names[contextData.userId]} onChange={changeUser}>
+            {names.map(name => (
                 <option value={name} key={v1()}>{name}</option>
             ))}
         </select>

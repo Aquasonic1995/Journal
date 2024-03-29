@@ -1,9 +1,15 @@
 import "./Input.css";
+import "../JournalForm/JournalForm.css";
+import {forwardRef} from "react";
 
-const Input = () => {
-    return (null
-        // <input type={type} name="title" className={cn({["warning"]: !isValid?.title})} ref={titleRef}/>
+const Input = forwardRef(function Input ({children, type, name, classname}, ref) {
+    return (
+        <div className="input-wrapper">
+            {children}
+            <input type={type} name={name} className={classname} ref={ref}/>
+        </div>
+
     );
-};
+});
 
 export default Input;

@@ -5,7 +5,8 @@ import {useContext} from "react";
 import {UserContext} from "../../UserContext/userContext.jsx";
 
 const JournalList = ({children, data}) => {
-    const {userId} = useContext(UserContext);
+    const {contextData} = useContext(UserContext);
+    const userId = contextData.userId;
 
     const sortData = (a, b) => {
         if (a.date > b.date) {
@@ -19,9 +20,10 @@ const JournalList = ({children, data}) => {
             {data.length === 0 && <p>Записей нет</p>}
             {data.length > 0 &&
                 data.sort(sortData).filter(item=>item.userId===userId).map(el => (
-                    <Card key={el.id}
+                    <Card key={el.id} id={el.id} data={data}
                     >
                         <JournalItem
+                            id={el.id}
                             title={el.title}
                             date={el.date}
                             text={el.text}

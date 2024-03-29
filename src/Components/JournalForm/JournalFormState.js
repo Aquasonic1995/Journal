@@ -7,20 +7,24 @@ export const initialState = {
     values: {
         title: '',
         date: '',
-        text:''
+        text:'',
     },
-    isFormReadyToSubmit: false
+    isFormReadyToSubmit: false,
+    editMode: false,
 };
 
 export function formReducer(state, action) {
     switch (action.type) {
         case "RESET_VALIDITY": {
-            return {...state, isValid: initialState.isValid};
+            return {...state, isValid: initialState.isValid };
         }
         case"CLEAR": {
-            return {...state,   values:initialState.values, isFormReadyToSubmit: false
+            return {...state,   values:initialState.values, isFormReadyToSubmit: false,
                 };
         }
+        // case "EDIT":{
+        //     return {...state, values: {...action.payload}};
+        // }
         case "SUBMIT" : {
             const titleValidity = !!action.payload.title.trim();
             const dateValidity = !!action.payload.date;
@@ -32,10 +36,13 @@ export function formReducer(state, action) {
                     date: dateValidity,
                     text: textValidity
                 },
-                isFormReadyToSubmit: titleValidity && dateValidity && textValidity
+                isFormReadyToSubmit: titleValidity && dateValidity && textValidity,
+                editMode: initialState.editMode
             };
 
         }
-
+        default: {
+            return state;
+        }
     }
 }

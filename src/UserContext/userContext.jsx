@@ -1,12 +1,19 @@
 import {createContext, useState} from "react";
 
 export const UserContext = createContext({
-        userId: 0
+    contextData: {
+        userId: 0,
+        editMode: false,
+        editedPost:{}
+    }
+
+
 });
 
 export const UserContextProvider = ({children}) => {
-    const [userId, setUserId] = useState(0);
-    return <UserContext.Provider value={{userId, setUserId}}>
+    const [contextData, setContextData] = useState({userId: 0,
+        editMode: false,editedPost:{}});
+    return <UserContext.Provider value={{contextData, setContextData}}>
         {children}
     </UserContext.Provider>;
 };
